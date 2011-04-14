@@ -1,0 +1,33 @@
+Arquivo apresenta o comportamente de wikiwords case sensitive e insensitive
+
+Legenda
+-------
+WUS: Wikiword sem definição e case sensitive
+WUI: Wikiword sem definição e case insensitive
+WDS: Wikiword com definição e case sensitive
+WDI: Wikiword com definição e case insensitive
+
+Post Wikiwords
+--------------
+Caso 1: Adicionar WUS "TESTE"
+	1.1 - Se existir WUS ou WDS "TESTE", deve gerar conflito
+	1.2 - Se existir WUI ou WDI "teste", deve gerar conflito
+
+Caso 2: Adicionar WUI "teste"
+	2.1 - Se existir WUS ou WDS "TESTE", deve gerar conflito
+	2.2 - Se existir WUI ou WDI "teste", deve gerar conflito
+
+Caso 3: Adicionar WDS "TESTE"
+	(OK) 3.1 - Se existir WUS "TESTE", deve adicionar WDS, trocar referências do WUS para WDS e remover WUS
+	(OK) 3.2 - Se existir WUI "teste", deve adicionar WDS, trocar referências do WUI para WDS e remover WUI
+	3.3 - Se existir WDS "TESTE", deve adicionar WDS
+	(OK) 3.4 - Se existir WDI "teste", deve gerar conflito
+	(OK) 3.5 - Se antes era WDI, deve recompilar todos as referências
+	
+Caso 4: Adicionar WDI "teste"
+	(OK) 4.1 - Se existir WUS "TESTE", deve adicionar WDI, trocar referências do WUS para WDI e remover WUS
+	(OK) 4.2 - Se existir WUI "teste", deve adicionar WDI, trocar referências do WUI para WDI e remover WUI
+	(OK) 4.3 - Se existir WDS "TESTE", deve gerar conflito
+	4.4 - Se existir WDI "teste", deve adicionar WDI
+	(OK) 4.5 - Se existir WDI "TESTE", deve gerar conflito
+	(OK) 4.6 - Se antes era WDS, efetuar getWikiwordsIgnoreCase com primeira word da composta, recompilar todas referências das palavras retornadas

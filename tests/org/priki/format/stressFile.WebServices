@@ -1,0 +1,495 @@
+<a href="/content/view.jf?idContent=4">Web Services. Construindo, disponibilizando e acessando Web Services via J2SE e J2ME.</a></span>
+		</h1>
+
+		<div class="box-cont"><!-- area do javanews -->
+
+
+<center>
+Enviada em Terça-Feira, 9 de Novembro de 2004 
+</center>
+
+<br>
+<p align="center"><a href="mailto:vitor@javafree.com.br">Vitor Fernando Pamplona</a></p><p align="center">
+Nos últimos anos o termo "Web Service" tem chamado a atenção de muitos
+analistas e arquitetos, principalmente dos mais fánáticos por
+business-to-business (B2B). O conceito foi criado, implementado e agora
+está começando a ser utilizado. As espectativas são grandes, altos
+investimentos, frameworks poderosos, ganhos em produtividade,
+portabilidade e em independência. Neste artigo, será apresentado um
+pouco desta grande tecnologia que prometeu e, já está cumprindo,
+revolucionar o modo como os sitemas são desenvolvidos. </p>
+<h2>Introdução a Web Service</h2>
+<p>
+Um requisito básico de qualquer empresa é prover serviços, sejam os
+vendedores de uma empresa, o setor de custos e compras, os prestadores
+de serviço, etc. Cada empresa oferece serviços para a comunicação entre
+ela e outras pessoas, sejam pessoas físicas ou jurídicas, internas ou
+externas a empresa. </p><p>
+Alguns desses serviços podem ser automatizados. Por exemplo, não é
+necessário existir um representante de vendas se o seu cliente já tem,
+em mãos, o preço e todos os outros dados relevantes para constituir um
+pedido de compra. Este pedido pode e, em muitos casos, já é feito, via
+interfaces computacionais. O cliente entra em seu site, monta o pedido
+como desejar e confirma a compra. Isto é um serviço web, ou seja, um
+serviço que está publicado na web para que qualquer pessoa possa fazer
+uso. </p>
+<p>
+Web Services foram criados para construir aplicações deste tipo,
+aplicações que são serviços na internet. Porém não faz parte do
+conceito de Web Service a criação de interfaces gráficas para os
+usuários, deixando esta parte para outras empresas ou pessoas
+desenvolverem. É comum encontrar textos afirmando que Web Services
+disponibilizam serviços somente para desenvolvedores, ou que Web
+Services nada mais são do que chamada de métodos usando XML. Estas
+definições estão corretas.</p>
+<p>
+Web Services é a tecnologia ideal para comunicação entre sistemas,
+sendo muito usado em aplicações B2B. A comunicação entre os serviços é
+padronizada possibilitando a independencia de plataforma e de linguagem
+de programação. Por exemplo, um sistema de reserva de passagens aéreas
+feito em Java e rodando em um servidor Linux pode acessar, com
+transparência, um serviço de reserva de hotel feito em .Net rodando em
+um servidor Microsoft. </p>
+
+<p>
+Para comunicar com o Web Service, é necessário uma implementação do protocolo <a href="http://www.w3.org/TR/SOAP" target="_blank">SOAP</a> (Simple Object Access Protocol) definido no <a href="http://www.w3.org/" target="_blank">W3C</a>.
+Este protocolo é o responsável pela independência que o Web Service
+precisa. Atualmente já encontra-se várias implementações disponíveis em
+várias linguagens. É só escolher uma e usar. </p><p>
+Na Figura 1 encontra-se um diagrama mostrando as mensagens trocadas
+entre cliente e servidor em uma comunicação SOAP. Existem duas
+aplicações se comunicando, um Client Wrapper e um Server Wrapper que
+estão disponibilizando a transparência para as aplicações. Entre eles
+só trafega XML, seguindo o protocolo SOAP sobre HTTP.</p>
+<img src="http://www.javafree.com.br/dependencias/tutoriais/1011/DevelopingJAX.gif">
+<p>
+Figura1: Retirada do Artigo <a href="http://www.developer.com/java/web/article.php/2237251" target="_Blank">Developing JAX-RPC Based Web Services Using Axis and SOAP</a>
+</p>
+
+<p>
+Um Web Service será publicado, e para que outras pessoas possam
+utilizá-lo é necessário definir como ele é, como deve ser acessado, e
+que valores ele retornará. Estas definições são descritas em um arquivo
+XML de acordo com a padronização <a href="http://www.w3.org/TR/wsdl" target="_blank">Web Service Description Language</a>
+(WSDL). Este arquivo deve ser construído para que os usuários do
+serviço possam entender o funcionamento do Web Service e, logicamente,
+será de acesso público.</p>
+
+<p>
+Os Web Services também podem ser utilizados para implementar
+arquiteturas orientadas a serviços, as Service-Oriented Architectures
+(SOA). Neste modelo de arquitetura os principais requisitos viram
+serviços e são acessados por outros serviços, modularizando e
+aumentando a coesão dos componentes da aplicação.</p>
+<p>
+O que será implementado neste artigo é um Web Service simples, para
+aprendizado da tecnologia e para desmentir a afirmação que Web Services
+são complexos de construir e complexos para utilizar . </p>
+
+<h2>Conhecendo o ambiente servidor</h2>
+<p>
+
+Todo o Web Service precisa ficar ativo e esperando requisições,
+portanto, necessita estar executando em um servidor. Neste artigo será
+utilizado o servidor <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a> para executar um framework de Web Service chamado <a href="http://ws.apache.org/axis/" target="_blank">Axis</a>. Ambos são sub-projetos livres da Apache, sendo que o <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a> está no projeto Jakarta e o <a href="http://ws.apache.org/axis/" target="_blank">Axis</a> está no projeto Web Services.</p>
+<p>
+O <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a>
+
+é um container para JSP e Servlets muito conhecido e muito utilizado.
+Encontra-se vários tutoriais e artigos sobre ele espalhados em páginas
+na internet. </p>
+<p>
+Já o <a href="http://ws.apache.org/axis/" target="_blank">Axis</a> é um conjunto de ferramentas para desenvolver WebServices. Dentre suas principais funcionalidades estão:
+</p><ul>
+  <li>implementação do protocolo <a href="http://www.w3.org/TR/SOAP" target="_blank">SOAP</a>;</li>
+  <li>implementação de classes para agilizar a comunicação e a publicação de Web Services;</li>
+  <li>utiliza containers JSP para disponibilizar os Web Services na rede.</li>
+
+</ul>  
+
+<h2>Instalando o ambiente servidor.</h2>
+<p>
+Para criarmos o servidor é necessário baixar e instalar o <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a>. Na época do lançamento deste artigo, a versão do <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a> em produção era a 5.0 e poderia ser encontrada neste endereço: <a href="http://apache.usp.br/jakarta/tomcat-5/v5.0.28/bin/jakarta-tomcat-5.0.28.zip" target="_blank">http://apache.usp.br/jakarta/tomcat-5/v5.0.28/bin/jakarta-tomcat-5.0.28.zip</a></p>
+<p>
+Após baixar o <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a>,
+deve-se descompactar o zip e criar a variável de ambiente CATALINA_HOME
+que deverá indicar o local onde será descompactado. Depois de concluído
+esse passo é possível iniciar o servidor executando o arquivo:
+CATALINA_HOME/bin/startup.bat no Windows ou
+CATALINA_HOME/bin/startup.sh no Linux.</p>
+
+<p>
+Para verificar se o <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a> está rodando, utiliza-se um navegador com o seguinte endereço: <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> . Se a instalação estiver correta o <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a> irá apresentar uma mensagem de ok. É claro, esta é a instalação padrão do <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a>, você poderá modificar e adicionar mais segurança a ela. </p>
+<p>
+O próximo a ser <a href="http://ws.apache.org/axis/releases.html" target="_blank">baixado</a> e <a href="http://ws.apache.org/axis/java/install.html" target="_blank">configurado</a> é o <a href="http://ws.apache.org/axis/" target="_blank">Axis</a>  que tem um fonte em Java e um em C++. Será utilizado o fonte em java na versão 1.1 que pode ser encontrado neste endereço: <a href="http://apache.usp.br/ws/axis/1_1/axis-1_1.zip" target="_blank"> http://apache.usp.br/ws/axis/1_1/axis-1_1.zip</a></p>
+
+<p>
+Após baixar o arquivo zip do <a href="http://ws.apache.org/axis/" target="_blank">Axis</a>,
+e descompactá-lo, deve-se mover a pasta "axis", que encontra-se dentro
+do diretório webapps do arquivo, para a pasta webapps do <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a>. </p>
+<p>
+Agora basta reiniciar o servidor <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a>, abrir um navegador e ir para à página: <a href="http://localhost:8080/axis" target="_blank">http://localhost:8080/axis</a> . Uma página do <a href="http://ws.apache.org/axis/" target="_blank">Axis</a> será apresentada concluíndo a instalação como a Figura 2: </p>
+
+<img src="http://www.javafree.com.br/dependencias/tutoriais/1011/axis_home.jpg">
+<p>
+Figura 2</p>
+
+<p>
+Nesta mesma página de apresentação, existirão dois links importantes: </p>
+<ul>
+<li> um link para validar a instalação: clicando nele será apresentado
+uma lista de componenetes necessários ("Needed Components"). Caso algum
+desses não for encontrado ele irá solicitar a instalação. Com as
+versões trabalhadas neste artigo, o <a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Tomcat</a> e o <a href="http://ws.apache.org/axis/" target="_blank">Axis</a> estarão completos portanto a validação OK;</li>
+
+<li> um link para visualizar os Web Services já instalados: clicando nele, existirão dois Web Services e clicando no link <i>(wsdl)</i>
+você verá o arquivo de especificação de ambos. Se, ao clicar, não
+aparecer nenhuma informação, não se preocupe, alguns navegadores não
+exibem XML, outros exibem como HTML, sendo necessário abrir o fonte da
+página para ver o código. Mas ele estará lá e funcionando.</li>
+</ul>
+
+<h2>Implementando um Web Service simples</h2>
+
+<p>
+O objetivo é aprender, então será criado um serviço bem simples. O
+serviço é a soma de duas variáveis inteiras retornando o resultado.
+Este exemplo poderá servir para qualquer outra implementação. Abaixo
+está a classe implementada. O nome do arquivo é Servico.java: </p>
+<pre>public class Servico {
+   public int soma(int valor1, int valor2) {
+      return valor1 + valor2;
+   } 
+}
+</pre>
+<p>
+
+Agora só falta disponibilizá-lo no nosso servidor para o mundo acessar.
+E, para fazer isso, deve-se alterar o nome do arquivo de Servico.java
+para Servico.jws, coloca-lo no diretório: CATALINA_HOME/webapps/axis/ e
+iniciar o servidor, se ele já não estiver iniciado. Se já estiver
+iniciado, o seu Web Service está publicado.</p>
+<p> 
+Os arquivos .jws são lidos pelo <a href="http://ws.apache.org/axis/" target="_blank">Axis</a>
+e representam Java Web Services. O Axis se baseará nesses arquivos
+(.jws) para criar os arquivos de definição WSDL. Todos os métodos
+públicos existentes nessas classes serão automaticamente
+disponibilizados para terceiros. </p>
+<p>
+Criar documentos XML é demorado e, muitas vezes, chato. Gerar o WSDL é
+uma característica muito relevante na escolha de uma implementação de
+SOAP e o <a href="http://ws.apache.org/axis/" target="_blank">Axis</a>
+é um dos poucos frameworks que conseguem fazer essa façanha de maneira
+transparente para o desenvolvedor. É por esse motivo que ele é
+altamente recomendado na construção de Web Services.</p>
+<p>
+Para acessar o Web Service criado basta abrir um navegador e ir ao endereço: <a href="http://localhost:8080/axis/Servico.jws" target="_blank">http://localhost:8080/axis/Servico.jws</a>
+
+. Da mesma forma que os outros dois Web Services foram vistos, este
+também terá um link para ver a especificação WSDL, e novamente poderá
+ser visto ou não dependendo do seu navegador.
+</p>
+<p>
+O arquivo WSDL da classe Servico ficará como abaixo:</p>
+
+<font color="#808080">01</font>&nbsp;<font color="#000000">&lt;?xml&nbsp;version=</font><font color="#2a00ff">"1.0"&nbsp;</font><font color="#000000">encoding=</font><font color="#2a00ff">"UTF-8"</font><font color="#000000">?&gt;</font><br>
+<font color="#808080">02</font>&nbsp;<font color="#ffffff">&nbsp;</font><font color="#000000">&lt;wsdl:definitions&nbsp;targetNamespace=</font><font color="#2a00ff">"http://localhost:8080/axis/Servico.jws"&nbsp;</font><br>
+
+<font color="#808080">03</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/wsdl/"&nbsp;</font><br>
+<font color="#808080">04</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:apachesoap=</font><font color="#2a00ff">"http://xml.apache.org/xml-soap"&nbsp;</font><br>
+<font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:impl=</font><font color="#2a00ff">"http://localhost:8080/axis/Servico.jws"&nbsp;</font><br>
+<font color="#808080">06</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:intf=</font><font color="#2a00ff">"http://localhost:8080/axis/Servico.jws"&nbsp;</font><br>
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:soapenc=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/soap/encoding/"&nbsp;</font><br>
+
+<font color="#808080">08</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:wsdl=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/wsdl/"&nbsp;</font><br>
+<font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:wsdlsoap=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/wsdl/soap/"&nbsp;</font><br>
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:xsd=</font><font color="#2a00ff">"http://www.w3.org/2001/XMLSchema"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">11</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:message&nbsp;name=</font><font color="#2a00ff">"somaRequest"</font><font color="#000000">&gt;</font><br>
+
+<font color="#808080">12</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:part&nbsp;name=</font><font color="#2a00ff">"valor1"&nbsp;</font><font color="#000000">type=</font><font color="#2a00ff">"xsd:int"</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">13</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:part&nbsp;name=</font><font color="#2a00ff">"valor2"&nbsp;</font><font color="#000000">type=</font><font color="#2a00ff">"xsd:int"</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">14</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:message&gt;</font><br>
+
+<font color="#808080">15</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:message&nbsp;name=</font><font color="#2a00ff">"somaResponse"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">16</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:part&nbsp;name=</font><font color="#2a00ff">"somaReturn"&nbsp;</font><font color="#000000">type=</font><font color="#2a00ff">"xsd:int"</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">17</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:message&gt;</font><br>
+<font color="#808080">18</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:portType&nbsp;name=</font><font color="#2a00ff">"Servico"</font><font color="#000000">&gt;</font><br>
+
+<font color="#808080">19</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:operation&nbsp;name=</font><font color="#2a00ff">"soma"&nbsp;</font><font color="#000000">parameterOrder=</font><font color="#2a00ff">"valor1&nbsp;valor2"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">20</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:input&nbsp;message=</font><font color="#2a00ff">"impl:somaRequest"&nbsp;</font><font color="#000000">name=</font><font color="#2a00ff">"somaRequest"</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">21</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:output&nbsp;message=</font><font color="#2a00ff">"impl:somaResponse"&nbsp;</font><font color="#000000">name=</font><font color="#2a00ff">"somaResponse"</font><font color="#000000">/&gt;</font><br>
+
+<font color="#808080">22</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:operation&gt;</font><br>
+<font color="#808080">23</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:portType&gt;</font><br>
+<font color="#808080">24</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:binding&nbsp;name=</font><font color="#2a00ff">"ServicoSoapBinding"&nbsp;</font><font color="#000000">type=</font><font color="#2a00ff">"impl:Servico"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">25</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdlsoap:binding&nbsp;style=</font><font color="#2a00ff">"rpc"&nbsp;</font><font color="#000000">transport=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/soap/http"</font><font color="#000000">/&gt;</font><br>
+
+<font color="#808080">26</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:operation&nbsp;name=</font><font color="#2a00ff">"soma"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">27</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdlsoap:operation&nbsp;soapAction=</font><font color="#2a00ff">""</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">28</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:input&nbsp;name=</font><font color="#2a00ff">"somaRequest"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">29</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdlsoap:body&nbsp;encodingStyle=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/soap/encoding/"&nbsp;</font><br>
+
+<font color="#808080">30</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">namespace=</font><font color="#2a00ff">"http://DefaultNamespace"&nbsp;</font><font color="#000000">use=</font><font color="#2a00ff">"encoded"</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">31</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:input&gt;</font><br>
+<font color="#808080">32</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:output&nbsp;name=</font><font color="#2a00ff">"somaResponse"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">33</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdlsoap:body&nbsp;encodingStyle=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/soap/encoding/"&nbsp;</font><br>
+
+<font color="#808080">34</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">namespace=</font><font color="#2a00ff">"http://localhost:8080/axis/Servico.jws"&nbsp;</font><font color="#000000">use=</font><font color="#2a00ff">"encoded"</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">35</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:output&gt;</font><br>
+<font color="#808080">36</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:operation&gt;</font><br>
+<font color="#808080">37</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:binding&gt;</font><br>
+<font color="#808080">38</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:service&nbsp;name=</font><font color="#2a00ff">"ServicoService"</font><font color="#000000">&gt;</font><br>
+
+<font color="#808080">39</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdl:port&nbsp;binding=</font><font color="#2a00ff">"impl:ServicoSoapBinding"&nbsp;</font><font color="#000000">name=</font><font color="#2a00ff">"Servico"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">40</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;wsdlsoap:address&nbsp;location=</font><font color="#2a00ff">"http://localhost:8080/axis/Servico.jws"</font><font color="#000000">/&gt;</font><br>
+<font color="#808080">41</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:port&gt;</font><br>
+<font color="#808080">42</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;/wsdl:service&gt;</font><br>
+
+<font color="#808080">43</font>&nbsp;<font color="#000000">&lt;/wsdl:definitions&gt;</font>
+<p>Analisar este arquivo é essencial para entender a profundidade da
+implementação. Uma das linhas mais importantes para este arquivo é a
+linha 19, onde define-se o nome do método e o nome de seus parâmetros.
+Eles deverão ser de conhecimento público para que as interfaces cliente
+consigam se comunicar com o Web Service.
+</p>
+
+<h2>Realizando um teste básico</h2>
+<p>
+O <a href="http://ws.apache.org/axis/" target="_blank">Axis</a>
+aceita que um Web Service seja chamado via uma requisição HTTP-GET.
+Portanto, ao digitar um endereço é possível testar o web service. No
+exemplo deste artigo o endereço é este: <a href="http://localhost:8080/axis/Servico.jws?method=soma&amp;valor1=2&amp;valor2=4" target="_blank">http://localhost:8080/axis/Servico.jws?method=soma&amp;valor1=2&amp;valor2=4</a>. </p>
+
+<p>
+Como pode-se notar, o endereço é a junção de um namespace, que é o endereço do WebService representado por <code>http://localhost:8080/axis/Servico.jws</code>, a variável <code>method</code>
+que, como seu nome diz, contém o nome do método que se deseja executar,
+e uma sequência dos parâmetros deste método. Lembrando que o nome dos
+parâmetros deve ser o mesmo definido na função da classe.</p>
+<p>
+O resultado da execução é um documento XML com a resposta <code>6</code>. Novamente, dependendo do browser não será visivel as tags XML. O XML que retornou na execução está abaixo: </p>
+
+<font color="#808080">01</font>&nbsp;<font color="#000000">&lt;?xml&nbsp;version=</font><font color="#2a00ff">"1.0"&nbsp;</font><font color="#000000">encoding=</font><font color="#2a00ff">"UTF-8"</font><font color="#000000">?&gt;</font><br>
+
+<font color="#808080">02</font>&nbsp;<font color="#000000">&lt;soapenv:Envelope&nbsp;</font><br>
+<font color="#808080">03</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:soapenv=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/soap/envelope/"&nbsp;</font><br>
+<font color="#808080">04</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:xsd=</font><font color="#2a00ff">"http://www.w3.org/2001/XMLSchema"&nbsp;</font><br>
+<font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;</font><font color="#000000">xmlns:xsi=</font><font color="#2a00ff">"http://www.w3.org/2001/XMLSchema-instance"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">06</font>&nbsp;<font color="#ffffff">&nbsp;</font><font color="#000000">&lt;soapenv:Body&gt;</font><br>
+
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;somaResponse&nbsp;soapenv:encodingStyle=</font><font color="#2a00ff">"http://schemas.xmlsoap.org/soap/encoding/"</font><font color="#000000">&gt;</font><br>
+<font color="#808080">08</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;</font><font color="#000000">&lt;somaReturn&nbsp;xsi:type=</font><font color="#2a00ff">"xsd:int"</font><font color="#000000">&gt;</font><font color="#990000">6</font><font color="#000000">&lt;/somaReturn&gt;</font><br>
+<font color="#808080">09</font>&nbsp;<font color="#ffffff"></font><br>
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">&lt;/somaResponse&gt;</font><br>
+
+<font color="#808080">11</font>&nbsp;<font color="#ffffff">&nbsp;</font><font color="#000000">&lt;/soapenv:Body&gt;</font><br>
+<font color="#808080">12</font>&nbsp;<font color="#000000">&lt;/soapenv:Envelope&gt;</font>
+
+<h2>Criando um cliente em Java para acessar o Servidor</h2>
+<p>
+O cliente também é uma classe simples, mas exige conhecimento em algumas classes não tão comuns no dia-a-dia. </p>
+<p>
+As classes Service e Call são classes do <a href="http://ws.apache.org/axis/" target="_blank">Axis</a>, portanto, para compilar e executar esta classe é necessário que todo o diretório lib, encontrado dentro do zip do <a href="http://ws.apache.org/axis/" target="_blank">Axis</a> esteja no CLASSPATH da aplicação. 
+
+</p><p>
+Visto este detalhe, abaixo encontra-se o arquivo fonte do cliente de
+Web Service. Esta classe fará a conexão ao Web Service para somar 2 com
+4 e irá apresentar o resultado 6 na saída padrão.</p>
+
+
+<font color="#808080">01</font>&nbsp;<font color="#7f0055"><b>import&nbsp;</b></font><font color="#000000">org.apache.axis.client.Service;</font><br>
+<font color="#808080">02</font>&nbsp;<font color="#7f0055"><b>import&nbsp;</b></font><font color="#000000">org.apache.axis.client.Call;</font><br>
+<font color="#808080">03</font>&nbsp;<font color="#ffffff"></font><br>
+<font color="#808080">04</font>&nbsp;<font color="#7f0055"><b>public&nbsp;class&nbsp;</b></font><font color="#000000">Cliente&nbsp;</font><font color="#000000">{</font><br>
+
+<font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>public&nbsp;static&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">main</font><font color="#000000">(</font><font color="#000000">String</font><font color="#000000">[]&nbsp;</font><font color="#000000">args</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">Exception&nbsp;</font><font color="#000000">{</font><br>
+<font color="#808080">06</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Endereço,&nbsp;local&nbsp;onde&nbsp;encontra-se&nbsp;o&nbsp;Web&nbsp;Service</font><br>
+
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">String&nbsp;local&nbsp;=&nbsp;</font><font color="#2a00ff">"http://localhost:8080/axis/Servico.jws"</font><font color="#000000">;</font><br>
+<font color="#808080">08</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Criando&nbsp;e&nbsp;configurando&nbsp;o&nbsp;serviço</font><br>
+
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Call&nbsp;call&nbsp;=&nbsp;</font><font color="#000000">(</font><font color="#000000">Call</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">Service</font><font color="#000000">()</font><font color="#000000">.createCall</font><font color="#000000">()</font><font color="#000000">;</font><br>
+<font color="#808080">11</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Configurando&nbsp;o&nbsp;endereço.</font><br>
+
+<font color="#808080">12</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">call.setTargetEndpointAddress</font><font color="#000000">(</font><font color="#000000">local</font><font color="#000000">)</font><font color="#000000">;</font><br>
+<font color="#808080">13</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Marcando&nbsp;o&nbsp;método&nbsp;a&nbsp;ser&nbsp;chamado.&nbsp;</font><br>
+<font color="#808080">14</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">call.setOperationName</font><font color="#000000">(</font><font color="#2a00ff">"soma"</font><font color="#000000">)</font><font color="#000000">;</font><br>
+
+<font color="#808080">15</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">16</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Parâmetros&nbsp;da&nbsp;função&nbsp;soma.</font><br>
+<font color="#808080">17</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Object</font><font color="#000000">[]&nbsp;</font><font color="#000000">param&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">Object</font><font color="#000000">[]{</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">Integer</font><font color="#000000">(</font><font color="#990000">2</font><font color="#000000">)</font><font color="#000000">,new&nbsp;Integer</font><font color="#000000">(</font><font color="#990000">4</font><font color="#000000">)}</font><font color="#000000">;</font><br>
+
+<font color="#808080">18</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Retorno&nbsp;da&nbsp;Função</font><br>
+<font color="#808080">19</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Integer&nbsp;ret&nbsp;=&nbsp;</font><font color="#000000">(</font><font color="#000000">Integer</font><font color="#000000">)</font><font color="#000000">call.invoke</font><font color="#000000">(</font><font color="#000000">param</font><font color="#000000">)</font><font color="#000000">;</font><br>
+
+<font color="#808080">20</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">21</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Imprime&nbsp;o&nbsp;resultado:&nbsp;ret&nbsp;=&nbsp;2&nbsp;+&nbsp;4.</font><br>
+<font color="#808080">22</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">System.out.println</font><font color="#000000">(</font><font color="#2a00ff">"Resultado&nbsp;da&nbsp;soma&nbsp;:&nbsp;"&nbsp;</font><font color="#000000">+&nbsp;ret</font><font color="#000000">)</font><font color="#000000">;</font><br>
+
+<font color="#808080">23</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}</font><br>
+<font color="#808080">24</font>&nbsp;<font color="#000000">}</font>
+
+
+
+<p>Este código está dentro de um arquivo chamado Cliente.java, após
+compilar e executar esta classe exibirá o resultado "Resultado da soma
+: 6" como desejado.</p>
+<p>
+O framework do Axis trata a primitiva <code>int</code> e a classe wrapper <code>Integer</code> como sendo iguais. Portanto, tanto faz usar uma ou outra. Neste exemplo, foi criado o Web Service com dois parâmetros <code>int</code> e aqui no cliente estamos usando dois parâmetros <code>Integer</code>. 
+
+</p>  
+<p>
+Como pode-se notar, o framework do Axis abstrai qualquer trabalho com
+XML, evitando que o desenvovedor necessite conhecer a sintaxe do XML do
+SOAP. </p>
+
+<h2>Acessando o Web Service via J2ME</h2>
+<p>
+Para este passo, é necessário que o Java Wireless Toolkit esteja instalado e funcionando no ambiente. </p>
+<p>
+A comunicação com Web Services se dá através de XML e do protocolo
+SOAP. Como o J2ME não possui classes para tratar estas implementações,
+é necessário utilizar outros dois projetos para atender as
+transparência. Os projetos são o <a href="http://ksoap.objectweb.org/" target="_blank">KSOAP</a> e o <a href="http://kxml.objectweb.org/" target="_blank">KXML</a> da <a href="http://www.objectweb.org/" target="_blank">ObjectWeb</a>. Ambos estão sob licença pública. </p><p>
+
+</p><p>
+Como pretende-se criar uma simples aplicação para celular (MIDP2), será
+utilizado o fonte dos dois projetos junto um outro arquivo fonte que
+será criado. É o jeito mais fácil de executar uma aplicação J2ME com
+duas bibliotecas</p>
+<p>
+O fonte do <a href="http://ksoap.objectweb.org/" target="_blank">KSOAP</a> pode ser encontrado aqui: <a href="http://ksoap.objectweb.org/software/downloads/current/ksoap-source.zip" target="_blank">http://ksoap.objectweb.org/software/downloads/current/ksoap-source.zip</a></p>
+E o fonte do <a href="http://kxml.objectweb.org/" target="_blank">KXML</a> pode ser encontrado aqui: <a href="http://kxml.objectweb.org/software/downloads/current/kxml-source.zip" target="_blank">http://kxml.objectweb.org/software/downloads/current/kxml-source.zip</a>
+<p>
+
+Descompacte os dois e crie a seguinte estrutura com os arquivos baixados:</p>
+<ul>
+<li>SeuProjetoJ2ME</li>
+<ul>
+  <li>org</li>
+  <ul>
+    <li>kxml</li>
+      -- Todas as suas pastas e arquivos internos a esta pasta que estão no zip.
+    <li>kobjects</li>
+
+      -- Todas as suas pastas e arquivos internos a esta pasta que estão no zip.
+    <li>ksoap</li>
+    <ul>
+      <li>transport</li>
+    </ul>
+    -- Necessário excluir o pacote marshal.
+  </ul>
+</ul>
+</ul>
+
+<p>Não serão utilizados as pastas referentes a servlets e a j2se do ksoap. Somente referente a J2ME e ao fonte básico.</p>
+<p>
+No diretório SeuProjetoJ2ME, deve ser criado a classe ClienteJ2ME.java conforme abaixo:</p>
+
+
+<font color="#808080">01</font>&nbsp;<font color="#7f0055"><b>import&nbsp;</b></font><font color="#000000">javax.microedition.lcdui.Display;</font><br>
+<font color="#808080">02</font>&nbsp;<font color="#7f0055"><b>import&nbsp;</b></font><font color="#000000">javax.microedition.lcdui.TextBox;</font><br>
+<font color="#808080">03</font>&nbsp;<font color="#ffffff"></font><br>
+
+<font color="#808080">04</font>&nbsp;<font color="#7f0055"><b>import&nbsp;</b></font><font color="#000000">org.ksoap.SoapObject;</font><br>
+<font color="#808080">05</font>&nbsp;<font color="#7f0055"><b>import&nbsp;</b></font><font color="#000000">org.ksoap.transport.HttpTransport;</font><br>
+<font color="#808080">06</font>&nbsp;<font color="#ffffff"></font><br>
+<font color="#808080">07</font>&nbsp;<font color="#7f0055"><b>public&nbsp;class&nbsp;</b></font><font color="#000000">ClienteJ2ME&nbsp;</font><font color="#7f0055"><b>extends&nbsp;</b></font><font color="#000000">javax.microedition.midlet.MIDlet&nbsp;</font><font color="#000000">{&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+
+<font color="#808080">08</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#7f0055"><b>private&nbsp;</b></font><font color="#000000">Display&nbsp;display;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#7f0055"><b>private&nbsp;</b></font><font color="#000000">String&nbsp;url&nbsp;=&nbsp;</font><font color="#2a00ff">"http://localhost:8080/axis/Servico.jws"</font><font color="#000000">;&nbsp;</font><br>
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">TextBox&nbsp;textbox&nbsp;=&nbsp;</font><font color="#7f0055"><b>null</b></font><font color="#000000">;&nbsp;</font><br>
+
+<font color="#808080">11</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">12</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">startApp</font><font color="#000000">()&nbsp;{&nbsp;</font><br>
+<font color="#808080">13</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">display&nbsp;=&nbsp;Display.getDisplay</font><font color="#000000">(</font><font color="#7f0055"><b>this</b></font><font color="#000000">)</font><font color="#000000">;&nbsp;</font><br>
+
+<font color="#808080">14</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>try&nbsp;</b></font><font color="#000000">{&nbsp;&nbsp;</font><br>
+<font color="#808080">15</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">testWebService</font><font color="#000000">()</font><font color="#000000">;&nbsp;</font><br>
+<font color="#808080">16</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}&nbsp;</font><font color="#7f0055"><b>catch&nbsp;</b></font><font color="#000000">(</font><font color="#000000">Exception&nbsp;ex</font><font color="#000000">)&nbsp;{&nbsp;</font><br>
+
+<font color="#808080">17</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">System.out.println</font><font color="#000000">(</font><font color="#000000">ex</font><font color="#000000">)</font><font color="#000000">;&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">18</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}&nbsp;</font><br>
+<font color="#808080">19</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">}&nbsp;</font><br>
+<font color="#808080">20</font>&nbsp;<font color="#ffffff"></font><br>
+<font color="#808080">21</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">pauseApp</font><font color="#000000">()&nbsp;{}&nbsp;</font><br>
+
+<font color="#808080">22</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">destroyApp</font><font color="#000000">(</font><font color="#7f0055"><b>boolean&nbsp;</b></font><font color="#000000">unconditional</font><font color="#000000">)&nbsp;{}&nbsp;</font><br>
+<font color="#808080">23</font>&nbsp;<font color="#ffffff"></font><br>
+<font color="#808080">24</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">testWebService</font><font color="#000000">()&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">Exception&nbsp;</font><font color="#000000">{&nbsp;</font><br>
+
+<font color="#808080">25</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">StringBuffer&nbsp;stringBuffer&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">StringBuffer</font><font color="#000000">()</font><font color="#000000">;&nbsp;</font><br>
+<font color="#808080">26</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">27</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">TextBox&nbsp;textBox&nbsp;=&nbsp;</font><font color="#7f0055"><b>null</b></font><font color="#000000">;&nbsp;</font><br>
+
+<font color="#808080">28</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">29</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;Chama&nbsp;o&nbsp;WebService</font><br>
+<font color="#808080">30</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">SoapObject&nbsp;client&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;&nbsp;</b></font><font color="#000000">SoapObject</font><font color="#000000">(</font><font color="#000000">url,</font><font color="#2a00ff">"soma"</font><font color="#000000">)</font><font color="#000000">;&nbsp;</font><br>
+
+<font color="#808080">31</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">client.addProperty</font><font color="#000000">(</font><font color="#2a00ff">"valor1"</font><font color="#000000">,new&nbsp;Integer</font><font color="#000000">(</font><font color="#990000">2</font><font color="#000000">))</font><font color="#000000">;&nbsp;</font><br>
+<font color="#808080">32</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">client.addProperty</font><font color="#000000">(</font><font color="#2a00ff">"valor2"</font><font color="#000000">,new&nbsp;Integer</font><font color="#000000">(</font><font color="#990000">4</font><font color="#000000">))</font><font color="#000000">;&nbsp;</font><br>
+
+<font color="#808080">33</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">HttpTransport&nbsp;ht&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">HttpTransport</font><font color="#000000">(</font><font color="#000000">url,</font><font color="#2a00ff">"soma"</font><font color="#000000">)</font><font color="#000000">;</font><br>
+<font color="#808080">34</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">stringBuffer.append</font><font color="#000000">(</font><font color="#2a00ff">"</font><br>
+
+<font color="#808080">35</font>&nbsp;<font color="#2a00ff">Resultado:&nbsp;"&nbsp;</font><font color="#000000">+&nbsp;ht.call</font><font color="#000000">(</font><font color="#000000">client</font><font color="#000000">))</font><font color="#000000">;</font><br>
+<font color="#808080">36</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><br>
+<font color="#808080">37</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#3f7f5f">//&nbsp;mostra&nbsp;o&nbsp;valor&nbsp;do&nbsp;resultado&nbsp;na&nbsp;tela.</font><br>
+
+<font color="#808080">38</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">textBox&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TextBox</font><font color="#000000">(</font><font color="#2a00ff">"Teste&nbsp;WebService"</font><font color="#000000">,&nbsp;stringBuffer.toString</font><font color="#000000">()</font><font color="#000000">,&nbsp;</font><font color="#990000">1024</font><font color="#000000">,&nbsp;</font><font color="#990000">0</font><font color="#000000">)</font><font color="#000000">;&nbsp;</font><br>
+
+<font color="#808080">39</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">display.setCurrent</font><font color="#000000">(</font><font color="#000000">textBox</font><font color="#000000">)</font><font color="#000000">;&nbsp;</font><br>
+<font color="#808080">40</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;</font><font color="#000000">}&nbsp;</font><br>
+<font color="#808080">41</font>&nbsp;<font color="#000000">}</font>
+
+
+<p>
+Pronto! Aplicação construída. Essas poucas linhas de código irão gerar
+os mesmos documentos XML de envio e recepção que o cliente Desktop
+produziu. Esse exemplo é um MIDlet para MIDP2 e deve ser executada com
+o Java Wireless Toolkit. Abaixo segue os passos para compilar e
+executar a aplicação no Java Wireless Toolkit.
+
+</p><ul>
+<li>Abrir o JWT e criar um novo projeto</li>
+<li>Configure as opções do projeto para utilizar MIDP2.0 e CLDC1.1</li>
+<li>Configure o nome do MIDlet para ClienteJ2ME</li>
+<li>Copiar este último arquivo e os fontes que você separou do KSOAP e do KXML para a pasta src do projeto. </li>
+<li>Compilar e Executar (O servidor Tomcat deve estar inicializado).</li>
+</ul>
+<p>Em J2ME as aplicações clientes de Web Services são mais difíceis de
+serem desenvolvidas, pois requerem mais conhecimento que os clientes
+Desktop. Mas, pela simplicidade dos dispositivos e o valor agregado,
+essa implementação, em alguns casos, ainda é viável. O que deve ser
+analizado é o custo da conexão em produção. </p>
+<p>
+Conexões com a internet via celulares normalmente são pagos por
+kilobyte trafegado nas redes das operadoras. O valor é caro, e como os
+arquivos XMLs são grandes, o custo de fazer a comunicação com Web
+Service pode não ser a melhor saída. Analise antes de qualquer escolha.
+</p>
+
+<h2>Bibliotecas e componentes usados</h2>
+<ul>
+<li><a href="http://ws.apache.org/axis/" target="_blank">Apache - Axis</a></li>
+<li><a href="http://jakarta.apache.org/tomcat/index.html" target="_blank">Apache - Tomcat</a></li>
+<li><a href="http://ksoap.objectweb.org/" target="_blank">ObjectWeb - KSOAP</a></li>
+<li><a href="http://kxml.objectweb.org/" target="_blank">ObjectWeb - KXML</a></li>
+</ul>
+
+<h2>Referências</h2>
+<ul>
+
+<li><a href="http://www.javaworld.com/javaworld/jw-01-2002/jw-0125-axis.html" target="_blank">Axis: The next generation of Apache SOAP </a></li>
+<li><a href="http://www.amitysolutions.com.au/documents/Axis-technote.pdf" target="_blank">Axis com JBoss</a></li>
+<li><a href="http://www.developer.com/java/web/article.php/2237251" target="_Blank">Developing JAX-RPC Based Web Services Using Axis and SOAP</a></li>
+<li><a href="http://www.devhood.com/tutorials/tutorial_details.aspx?tutorial_id=178" target="_blank">Interoperability of Web Services: Seeing is believing</a></li>
+<li><a href="http://javaboutique.internet.com/tutorials/Axis2/" target="_blank">Using Apache Axis version 1 to build Web Services</a></li>
+<li><a href="http://www.brics.dk/%7Eamoeller/WWW/webservices/" target="_blank">Web Services</a></li>
+<li><a href="http://javaboutique.internet.com/tutorials/Axis/" target="_blank">Web Services with Axis</a></li>
+</ul><br><b>Vitor Fernando Pamplona</b> está cursando o 4º ano de
+graduação em Ciências da Computação da Universidade Regional de
+Blumenau. É entusiasta do Prevayler, da XP e do Software Livre.
+Participa profissionalmente de um projeto envolvendo Swing, J2EE e
+Hibernate, usa o sistema operacional Fedora Core 2 em casa e na
+empresa, é lider do projeto <a href="http://babaxp.org" target="_blank">Baba XP</a>, articulista do <a href="http://www.imasters.com.br/nc.php?cc=151" target="_Blank">IMasters</a>, um dos coordenadores do <a href="http://blumenau.javafree.org" target="_blank">JavaFree Blumenau JUG</a> e um dos administradores do portal sobre java e software livre, <a href="http://www.javafree.org" target="_blank">JavaFree.org</a>

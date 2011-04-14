@@ -1,0 +1,12 @@
+Arquivo apresenta o funcionamento das listas relacionadas de uma wikiword
+
+Wikiwords relacionadas
+----------------------
+- Wikiword mantém uma lista de wikiwords relacionadas
+- Esta lista é utilizada para a árvore de pesquisa
+- Comentários acabam não saindo na árvore de pesquisa
+
+Textos relacionados
+-------------------
+- Wikiword mantém uma lista de textos relacionados, seja definição ou comentário
+- Esta lista é utilizada para recompilação

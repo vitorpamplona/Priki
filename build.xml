@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PrikiEngine" default="build">
+    <!-- ================================= 
+         Properties & property files
+         ================================= -->
+    <!-- source folders -->
+    <property name="src.dir" location="src" />
+	<property name="test.dir" location="tests" />
+	<property name="lib.dir" location="lib" />
+    <!-- build folders -->
+    <property name="bin.dir" location="bin" />
+    <property name="dist.dir" location="dist" />
+	
+    <!-- ================================= 
+         Classpath vars
+         ================================= -->
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    <!-- ================================= 
+          target: clean
+         ================================= -->
+    <target name="clean" description="">
+        <delete dir="${dist.dir}" failonerror="false" />
+        <delete dir="${bin.dir}" failonerror="false" />
+    </target>
+    
+	<!-- ================================= 
+          target: init
+         ================================= -->
+    <target name="init" description="Prepares the environment to the other targets">
+        <mkdir dir="${bin.dir}" />
+        <mkdir dir="${dist.dir}" />
+    </target>
+    
+	<!-- ================================= 
+          target: build
+         ================================= -->
+    <target name="build" depends="init" description="">
+        <javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.5" target="1.5" debug="false">
+        	<classpath>
+        		<fileset dir="${lib.dir}" includes="*.jar">
+        		</fileset>
+        	</classpath>
+    	</javac>
+        <javac srcdir="${test.dir}" destdir="${bin.dir}" source="1.5" target="1.5" debug="false">
+          	<classpath>
+           		<fileset dir="${lib.dir}" includes="*.jar">
+           		</fileset>
+          	</classpath>
+        </javac>    	
+    </target>
+    <!-- ================================= 
+          target: clean build
+         ================================= -->
+    <target name="clean-build" depends="clean,build" />
+    <!-- ================================= 
+          target: war
+         ================================= -->
+    <target name="dist" description="">
+    	<delete dir="${bin.dir}" failonerror="false" />
+    	<mkdir dir="${bin.dir}" />
+        <javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.6" target="1.6" debug="false">
+           	<classpath>
+           		<fileset dir="${lib.dir}" includes="*.jar">
+           		</fileset>
+           	</classpath>
+        </javac>    	
+        <jar destfile="${dist.dir}/prikiEngine.jar">
+            <fileset dir="${bin.dir}" />
+        </jar>
+    	<copyfile dest="${dist.dir}/../../priki/WEB-INF/lib/prikiEngine.jar" src="${dist.dir}/prikiEngine.jar"/>
+    </target>
+
+</project>

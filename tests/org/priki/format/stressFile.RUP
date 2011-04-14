@@ -1,0 +1,413 @@
+<a href="/content/view.jf?idContent=7">Obtendo Qualidade de Software com o RUP. </a></span>
+		</h1>
+
+		<div class="box-cont"><!-- area do javanews -->
+
+
+<center>
+Enviada em Segunda-Feira, 6 de Dezembro de 2004 
+</center>
+
+<br>
+<p align="center"><b>Ronaldo Rezende Vilela Luiz </b></p>
+<p align="center">Sistemas de Informação ? Universidade de Uberaba (UNIUBE)  </p>
+<p align="center">Uberaba, MG - Brasil </p>
+<p align="center">ronaldinho79@bol.com.br </p>
+<br><br>
+
+<p><i><b>Abstract</b>.This 
+article describes what should be considered in the software development to 
+achieve acceptable quality patterns. The article shows that quality software is 
+something that should be considered in all time in the application life cycle. 
+One of the features that can maximize the software?s quality level is the 
+iterative and incremental development. Moreover, the failures of the waterfall 
+development process and the show and description of the Rational Unified Process 
+(RUP)?s features will be approached.</i></p>
+<p><i><b>Resumo.</b> Este artigo descreve o que deve ser levado em
+consideração no desenvolvimento de software para atingir padrões de
+qualidade aceitáveis. O artigo mostra que a qualidade de software é
+algo que deve ser levado em consideração em todo momento do ciclo de
+vida do aplicativo. Uma das características que podem elevar o nível de
+qualidade do software é o desenvolvimento iterativo e incremental. Além
+disso, são abordadas as falhas do processo de desenvolvimento em
+cascata e a apresentação e descrição das características do Rational
+Unified Process (RUP).</i></p>
+
+<br>
+<h2>1. Introdução</h2>
+<p>A cada dia que passa, as organizações se tornam mais 
+dependentes dos sistemas de informação. Atualmente, não apenas sistemas que 
+podem colocar a vida de pessoas em risco são considerados sistemas de missão 
+crítica. Hoje, os sistemas de informação de muitas empresas são qualificados 
+como de missão crítica, pois podem gerar enormes prejuízos financeiros caso haja 
+eventuais problemas com os mesmos.</p>
+<p>A atividade de desenvolvimento de software possui um alto grau de risco. 
+Essa atividade já gerou grandes prejuízos no passado e continua gerando. 
+Atualmente, muitos projetos de desenvolvimento de software são iniciados e não 
+são terminados, e outros são terminados consumindo prazos e orçamentos bem acima 
+do que foi estipulado no início do projeto. Além disso, muitos produtos 
+desenvolvidos possuem um nível muito baixo de qualidade. </p>
+<p>Conforme [Kruchten 2003], um produto de 
+qualidade deve ter ausência de defeitos e, principalmente, deve atender aos 
+propósitos desejados. Alguma coisa com qualidade deve fazer o que as pessoas 
+querem que ela faça. Se alguma coisa é livre de 
+defeitos, mas não faz o que as pessoas querem  
+ que ela   faça, essa coisa é um produto 
+desnecessário. </p>
+<p>              
+ A qualidade de software não pode ser avaliada de maneira isolada. 
+Softwares são desenvolvidos pelas organizações através de procedimentos. Um 
+método pobre ou a ausência de uma metodologia pode ser a causa da baixa 
+qualidade. Sendo assim, a avaliação da qualidade está diretamente relacionada 
+com a qualidade de processos e metodologias utilizadas. </p>
+<h2>2. Metodologias de Desenvolvimento </h2>
+<p> Metodologias de desenvolvimento e estruturas de 
+avaliação de processos podem ser comparadas sob duas dimensões: de um lado, 
+temos o vértice pouca formalidade / muita formalidade e de outro, o método 
+cascata / método iterativo, exemplificado através da Figura 1. </p>
+
+
+<p align="center"><img src="http://www.javafree.com.br/dependencias/artigos/rup/images/image001.jpg" height="365" width="500"></p><p align="center">Figura 1 : Mapa de processos </p>
+
+<p>              
+ Os processos com pouca formalidade produzem o mínimo de documentação 
+possível e procedimentos de trabalho bastante informais. Os formais possuem 
+maior documentação, mantém o histórico dos artefatos gerados e possuem 
+gerenciamento de mudanças. </p>
+<p>              
+ O método cascata é um procedimento linear, onde a integração e os testes 
+são feitos no fim do ciclo de desenvolvimento. O método iterativo é guiado pelo 
+risco, ou seja, é voltado para a eliminação e minimização de riscos. A 
+implementação da arquitetura, a integração e os testes são realizados desde o 
+início do ciclo de vida do aplicativo. </p>
+
+
+
+
+
+<h3> 2.1 Método Cascata </h3>
+
+<p> Esse método, também conhecido como seqüencial, ou 
+linear, foi utilizado por muitos anos e ainda é utilizado. Segundo [Kroll  e  Kruchten  2003], esse 
+processo se baseia nos seguintes passos: </p>
+<ul>
+  <li> Entender completamente o problema a ser resolvido, 
+  seus requisitos e suas restrições;  </li>
+  <li> Projetar uma solução que atenda todos os requisitos 
+  e restrições. Examinar o projeto cuidadosamente e ter certeza que todas as 
+  partes interessadas concordam que essa é a solução certa;  </li>
+  <li> Fazer a implementação do projeto, usando as melhores 
+  técnicas de engenharia ;   </li>
+  <li> Verificar se a solução atende aos requisitos 
+  estabelecidos;  </li>
+
+  <li> Distribuir o produto.  </li>
+</ul>
+<p>              
+ Esse processo é similar à forma a qual pontes e edifícios são 
+construídos. Algumas coisas devem ser feitas dessa maneira. Em um projeto com 
+dois meses de duração, essa metodologia poderia ser usada. Mas normalmente, 
+softwares não devem ser desenvolvidos dessa forma. </p>
+<h3> 2.2 Método Iterativo e Incremental </h3>
+<p> O método iterativo foi criado para superar as 
+dificuldades impostas pelo modelo cascata. Já que o modelo cascata pode ser 
+usado com sucesso em projetos pequenos, onde o domínio do problema é bem 
+conhecido, a solução encontrada foi dividir grandes projetos em projetos 
+menores.  </p>
+<p>              
+ Dessa maneira, alguns requisitos e alguns riscos podem ser identificados, 
+um projeto pode ser realizado, uma implementação pode ser construída para esse 
+projeto, validada e testada. Esse processo se repete com outras partes do 
+sistema até que o sistema inteiro seja terminado. Isso é chamado de modo 
+iterativo. </p>
+
+<p>               
+ Em cada pequena parte do sistema é feita uma iteração. A iteração segue o 
+modelo seqüencial tradicional, com identificação de necessidades, análise, 
+projeto, implementação e testes. A cada iteração o sistema é incrementado até 
+que o ciclo de desenvolvimento do aplicativo termine. Nesse ponto, um novo ciclo 
+de desenvolvimento pode ser iniciado. </p>
+<p>              
+ A maneira de desenvolver projetos através de várias iterações que vão 
+incrementando o projeto até que se chegue a um objetivo é chamada de modo 
+iterativo e incremental. Atualmente esse paradigma de desenvolvimento é bem 
+aceito e vem sendo utilizado por várias metodologias de desenvolvimento de 
+software. </p>
+
+<h2>3. O  Rational Unified Process</h2>
+<p> Conforme [Kroll e Kruchten  2003], podemos ter três definições para o Rational Unified Process (RUP): </p>
+<ul>
+  <li> O RUP é uma maneira de desenvolvimento de software 
+  que é iterativa, centrada à arquitetura e guiada por casos de uso. É descrita 
+  em vários livros e artigos. Uma das maiores fontes de informações é o próprio 
+  produto IBM RUP <a title="" href="#_ftn1" name="_ftnref1">[1]</a>, 
+  que contém guias detalhados, exemplos e modelos cobrindo todo o ciclo de vida 
+  do software;   </li>
+
+  <li> O RUP é um processo de engenharia de software bem 
+  definido e bem estruturado. O RUP define claramente quem é responsável pelo 
+  que, como as coisas devem ser feitas e quando fazê-las.    O 
+  RUP também provê uma estrutura bem definida para o ciclo de vida de um projeto 
+  RUP, articulando claramente os marcos essenciais e pontos de 
+  decisão;  </li>
+  <li> O RUP é também um produto de processo que oferece 
+  uma estrutura de processo  customizável  para a 
+  engenharia de software. O produto IBM RUP suporta a customização e autoria de 
+  processos, e uma vasta variedade de processos, ou configuração de processos, 
+  podem ser montadas nele. Essas configurações do RUP podem ser criadas para 
+  suportar equipes grandes e pequenas, e técnicas de desenvolvimento 
+  disciplinadas ou menos formais. O produto IBM RUP contém várias configurações 
+  e visões de processos prontas que guiam analistas, desenvolvedores, 
+  testadores, gerentes de projeto, gerentes de configuração, analistas de dados, 
+  e outros membros da equipe de desenvolvimento em como desenvolver o software. 
+  Ele tem sido utilizado por muitas companhias em diferentes setores da 
+  indústria.  </li></ul>
+<p>              
+ O RUP utiliza a Linguagem Unificada de Modelagem (UML<a title="" href="#_ftn2" name="_ftnref2">[2]</a>) 
+para especificar, modelar e documentar artefatos. A UML é um padrão definido 
+pelo OMG<a title="" href="#_ftn3">[3]</a> 
+e ter se tornado o padrão empresarial para a modelagem orientada a objetos<a title="" href="#_ftn4">[4]</a>. </p>
+
+<p>              
+ Por ser flexível e configurável, o RUP pode ser utilizado em projetos de 
+pequeno, médio e grande porte. [Kroll e Kruchten 2003] mostra como o RUP pode ser utilizado em um 
+projeto de uma semana com uma equipe de uma pessoa. </p>
+
+<h3> 3.1 Os Princípios do RUP </h3>
+<p> Não existe uma maneira exata de aplicar o RUP, pois ele 
+pode ser aplicado de várias formas e será diferente em cada projeto e 
+organização. Porém, existem alguns princípios que podem caracterizar e 
+diferenciar o RUP de outros métodos iterativos: </p>
+<ul>
+  <li> Atacar os riscos cedo e 
+  continuamente;  </li>
+  <li> Certificar-se de entregar algo de valor ao 
+  cliente;  </li>
+
+  <li> Focar no software executável;  </li>
+  <li> Acomodar mudanças cedo;  </li>
+  <li> Liberar um executável da arquitetura 
+  cedo;  </li>
+  <li> Construir o sistema com 
+  componentes;  </li>
+  <li> Trabalhar junto como um time;  </li>
+
+  <li> Fazer da qualidade um estilo de vida, não algo para 
+  depois.  </li>
+</ul>
+
+<h3> 3.2 Elementos do RUP </h3>
+<p> O RUP possui cinco elementos principais: papéis, 
+atividades, artefatos, fluxos de trabalho e disciplinas. </p>
+<p>              
+ Um papel (ou perfil) define o comportamento e as responsabilidades de um 
+determinado indivíduo ou grupo de indivíduos trabalhando como uma equipe. Papéis 
+não são indivíduos e nem títulos de trabalho. Um indivíduo pode assumir vários 
+papéis. São exemplos de papéis: </p>
+<ul>
+  <li> Analista de sistema ? O indivíduo que assume este 
+  papel coordena a obtenção dos requisitos e a modelagem dos casos de uso 
+  identificando funcionalidades do sistema e estabelecendo limites do 
+  sistema;  </li>
+
+  <li> Projetista ? Esse indivíduo define 
+  responsabilidades, operações, atributos, relacionamentos de uma ou mais 
+  classes e determina como elas devem ser ajustadas para serem implementadas no 
+  ambiente;  </li>
+  <li> Projetista de testes ? Responsável pelo 
+  planejamento, projeto, implantação e avaliação de testes, incluindo a geração 
+  de plano e modelo de teste, implementando procedimentos de testes e avaliando 
+  a abrangência dos testes, resultados e a efetividade.  
+</li>
+</ul>
+
+<p>              
+ Uma atividade é uma unidade de trabalho que um indivíduo executa quando 
+está exercendo um determinado papel e produz um resultado importante para o 
+contexto do projeto. Cada atividade pode ser dividida em passos. São exemplos de 
+atividades: </p>
+<p>
+</p><ul>     
+   <li> Planejar uma iteração: realizada pelo papel gerente de projeto; </li>
+
+   <li> Encontrar casos de uso e atores: realizada pelo papel analista de sistemas; </li>
+   <li> Rever o projeto: realizada pelo papel revisor de projeto; </li>
+   <li> Executar um teste de performance: realizado pelo papel testador de performance. </li>
+</ul>
+<p>              
+ Um artefato é um pedaço de informação que é produzido, modificado ou 
+utilizado em um processo. Os artefatos são os produtos de um projeto. São as 
+coisas produzidas durante o desenvolvimento do projeto. Artefatos são utilizados 
+como entradas de atividades e são produzidos como saída. Os artefatos podem ter 
+várias formas: </p>
+<ul>
+
+  <li> Um modelo, como um modelo de caso de uso, um modelo 
+  de projeto;  </li>
+  <li> Um elemento de um modelo, como uma classe, um caso 
+  de uso, um <span class="GramE">sub-sistema ;  </span></li>
+  <li> Um documento, como um caso de negócio, glossário, 
+  visão;  </li>
+  <li> Código fonte; </li> 
+  <li> Executáveis.  </li></ul>
+
+<p>              
+ A enumeração de atividades, papéis e artefatos não constituem um 
+processo. É necessário saber a seqüência do desenvolvimento das atividades para 
+que possam ser produzidos artefatos de valor para o projeto. Um fluxo de 
+trabalho<a title="" href="#_ftn5">[5]</a> é uma seqüência de atividades que são executadas para a produção de um resultado 
+valioso para o projeto. Fluxos de trabalho podem ser representados por diagramas 
+de seqüência, diagramas de colaboração e diagramas de atividades da linguagem 
+UML. O RUP utiliza três tipos de fluxos de trabalho: </p>
+<ul>
+  <li>Fluxos de trabalho principais, associados com cada disciplina (figura 2);  </li>
+  <li> Fluxos de trabalho de detalhe, para detalhar cada fluxo de trabalho principal (figura 3);  </li>
+  <li> Planos de iteração, que mostram como a iteração deverá ser executada.  </li>
+
+</ul>
+<p align="center"> <img src="http://www.javafree.com.br/dependencias/artigos/rup/images/image003.jpg" height="515" width="438"></p>
+<p align="center">Figura 2: Fluxo de trabalho: requisitos </p>
+<p align="center"><img src="http://www.javafree.com.br/dependencias/artigos/rup/images/image005.jpg" height="330" width="413"></p>
+<p align="center"> Figura 3 :Detalhamento de fluxo de trabalho: analisar o problema </p>
+
+<p>              
+ Uma disciplina é uma coleção de atividades relacionadas que fazem parte 
+de um contexto comum em um projeto. As disciplinas proporcionam um melhor 
+entendimento do projeto sob o ponto de vista tradicional de um processo cascata. 
+A separação das atividades em disciplinas torna a compreensão das atividades 
+mais fácil, porém dificulta mais o planejamento das atividades. O RUP possui 
+nove disciplinas, divididas em disciplinas do processo e de suporte. As 
+disciplinas de processo são: modelagem de negócios, requisitos, análise e 
+projeto, implementação, teste e distribuição. As de suporte são: configuração e 
+gerenciamento de mudanças, gerenciamento de projeto, e 
+ambiente. </p>
+<p align="center"><img src="http://www.javafree.com.br/dependencias/artigos/rup/images/image007.jpg" height="309" width="495"></p>
+<p align="center"> Figura 4: Arquitetura geral do RUP </p>
+
+<p>Conforme mostra a figura 4, o RUP possui duas dimensões: </p>
+<ul>
+  <li> O eixo horizontal representa o tempo e mostra os 
+  aspectos do ciclo de vida do processo à medida que se desenvolve. Representa o 
+  aspecto dinâmico do processo. É expresso em termos de fases, disciplinas e 
+  marcos.  </li>
+  <li> O eixo vertical representa as disciplinas, que 
+  agrupam as atividades de maneira lógica, por natureza. Representa o aspecto 
+  estático do processo. É descrito em termos de componentes, disciplinas, 
+  atividades, fluxos de trabalho, artefatos e papéis do 
+  processo.  </li>
+</ul>
+<h3>3.3 O Ciclo de Vida de um Projeto RUP </h3>
+<p> O ciclo de desenvolvimento no RUP possui quatro fases: 
+iniciação<a title="" href="#_ftn6">[6]</a>, elaboração, construção e transição. Cada uma é concluída por um marco principal, 
+ou seja, cada fase é basicamente um intervalo de tempo entre dois marcos principais, como é mostrado na figura 5. </p>
+
+<p align="center"><img src="http://www.javafree.com.br/dependencias/artigos/rup/images/image009.gif" height="163" width="426"></p>
+<p align="center"> Figura 5: As fases e os marcos de um projeto </p>
+<p>              
+ O ciclo de desenvolvimento termina com uma versão completa do produto de 
+software. As fases definem estados do projeto, que são definidos por riscos que 
+estão sendo mitigados ou questões que precisam ser 
+respondidas. </p>
+<p>              
+ A fase de iniciação, foca no tratamento de riscos relacionados com o caso 
+de negócio. Deve ser verificado se o projeto é viável e se é financeiramente 
+possível.  </p>
+<p>              
+ Na fase elaboração, o foco deve ser nos riscos técnicos e arquiteturais. 
+O escopo deve ser revisado e os requisitos devem estar mais 
+compreendidos. </p>
+<p>              
+ Durante a construção, a atenção será voltada para os riscos ?lógicos?, e 
+a maior parte do trabalho será realizada. </p>
+
+<p>              
+ Na fase de transição, serão tratados os riscos associados com a logística 
+de distribuição do produto para a base de usuários. </p>
+<p>              
+ Embora varie muito em empresas e projetos diferentes, um ciclo <span class="GramE">de desenvolvimento  para um projeto de tamanho médio, possui 
+uma distribuição de esforço e programação como é apresentado na tabela 1 e na 
+figura 6. </span></p>
+
+<b></b><p><b>Tabela 1. Distribuição de esforço e programação em 
+projetos de médio porte. </b></p>
+<p align="center"><img src="http://www.javafree.com.br/dependencias/artigos/rup/images/tabela1.jpg"></p>
+
+<p align="center"><img src="http://www.javafree.com.br/dependencias/artigos/rup/images/image011.jpg" height="172" width="431"></p>
+<p align="center"> Figura 6: Distribuição de esforço e programação em projetos de médio porte. </p>
+<p>              
+ Conforme descrito na documentação do RUP, cada passagem pelas quatro 
+fases gera uma geração do software. A menos que o produto "desapareça", ele irá 
+se desenvolver na próxima geração, repetindo a mesma seqüência de fases de 
+iniciação, elaboração, construção e transição. Esses ciclos subseqüentes são 
+chamados de <strong>ciclos 
+de evolução. </strong>A cada ciclo, são produzidas novas gerações. </p>
+
+<p>              
+ Os ciclos de evolução podem ser disparados por melhorias sugeridas pelos 
+usuários, mudanças no contexto do usuário, mudanças na tecnologia subjacente, 
+reação à concorrência e assim por diante. Normalmente, a menos que ocorram 
+mudanças significativas do produto ou da arquitetura, os ciclos de evolução têm 
+fases de Iniciação e Elaboração bem menores, pois a definição e a arquitetura 
+básicas do produto foram determinadas por ciclos de desenvolvimento anteriores. 
+ </p>
+<h2> 4. Conclusão </h2>
+<p> Com a utilização de uma metodologia de desenvolvimento de software como o RUP, é possível obter: </p>
+<ul>
+  <li> Qualidade de software;  </li>
+  <li> Produtividade no desenvolvimento, operação e 
+  manutenção de software;  </li>
+
+  <li> Controle sobre desenvolvimento dentro de custos, 
+  prazos e níveis de qualidade desejados;  </li>
+  <li> Estimativa de prazos e custos com maior 
+  precisão.  </li></ul>
+<p>           
+ Apesar dos benefícios, deve-se ter a consciência que os benefícios não 
+virão de maneira imediata. É necessário adquirir treinamento adequado, adaptação 
+da metodologia no contexto ao qual ela será utilizada, apoio especializado para 
+as equipes de desenvolvimento e tempo para a absorção da 
+metodologia. </p>
+<p>         
+  Mais informações a respeito do RUP podem 
+ser obtidas no site do IBM RUP e também no site da 
+comunidade IBM  Rational . (IBM 2004). </p>
+<h2>Referências</h2>
+<p> Comunidade IBM RUP (2004) http://www-130.ibm.com/developerworks /rational/community,Novembro. </p>
+
+<p> Fowler, Martin (2003) ?UML Distilled: A Brief Guide to the Standard Object Modeling Language?, Addison Wesley, 3ª Edição. </p>
+<p> IBM Rational Unified Process Versão 2003.06.12.01 . (2004) http://www-306.ibm.com/software/rational, Novembro. </p>
+<p> IBM RUP (2004) http://www-130.ibm.com/developerworks/rational/products/rup,Novembro. </p>
+<p> Kroll, P. e Kruchten  P. (2003) ?The Rational Unified Process Made Easy: A Practitioner's Guide to the RUP?, Addison Wesley. </p>
+<p> Kruchten, P. (2003) ?The Rational Unified Process: An Introduction?, Addison Wesley, 3ª Edição . </p>
+<p> Larman, Craig (2001) ?Applying UML and Patterns ? An Introduction
+to Object-Oriented Analysis and Design and the Unified Process?,
+Prentice Hall, 2ªEdição . </p>
+
+<p> Object Management Group (2004) http://www.omg.org, Novembro.</p>
+<p> Perrelli, Hermano (2004) ?Visão Geral do RUP?. Centro de
+Informática, Universidade Federal de Pernambuco.
+http://www.cin.ufpe.br/~if717/slides/3-visao-geral-do-rup.pdf,
+Novembro. </p>
+
+<p><a title="" href="#_ftnref1" name="_ftn1">[1]</a>Após a compra da
+Rational pela IBM, o produto Rational Unified Process passou a se
+chamar IBM Rational Unified Process (IBM RUP). </p>
+<p><a title="" href="#_ftnref2" name="_ftn2">[2]</a>UML: Abreviatura do inglês Unified Modeling Language. [Fowler 2003] é uma ótima referência para esse assunto.</p>
+<p><a title="" href="#_ftnref3" name="_ftn3">[3]</a>OMG: Object Management Group.</p>
+
+<p><a title="" href="#_ftnref4" name="_ftn4">[4]</a>Consulte [Larman 2001] para informações sobre aplicação da UML para análise e projeto orientados a objeto</p>
+
+<p><a title="" href="#_ftnref5" name="_ftn5">[5]</a>O termo fluxo de trabalho vem do termo inglês workflow. Pode ser traduzido também como fluxo de atividade.</p>
+
+<p><a title="" href="#_ftnref6" name="_ftn6">[6]</a>Iniciação é a tradução do termo inglês ?inception?. Esse termo é também traduzido como ?concepção?.</p>
+
+<h2>Nota sobre o autor</h2>
+<p><b><a href="mailto:ronaldinho79@bol.com.br">Ronaldo Rezende Vilela Luiz</a></b>
+estará cursando o 8º e último período do curso de Sistemas de
+Informação da Universidade de Uberaba no primeiro semestre de 2005. É
+um dos administradores e fundadores do portal <a href="http://www.oodesign.com.br/" target="_blank">OODesign</a>. Incentiva o uso de metodologias 
+de desenvolvimento, de qualidade de software e de software livre.<br>
+
+</p>
+
+
