@@ -333,6 +333,13 @@ public class Wiki implements Serializable {
     	}
     }
     
+	public void removeAllComments() {
+		for (Wikiword w : words().values()) { 
+			w.clearComments();
+		}
+	}
+
+
     /** Search by an element */
     public Collection<Wikiword> search(String keyword) {
         return words().searchByAnythingWith(keyword);
